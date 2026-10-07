@@ -48,7 +48,18 @@ GET https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}
 GET https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={API_KEY}
 ```
 
-> Replace `{city}` with the city name and `{API_KEY}` with your key from OpenWeather.
+The browser never calls OpenWeather directly. It calls a small Vercel serverless proxy at `api/weather.js`, which adds the key on the server:
+
+```
+GET /api/weather?type=weather&city={city}
+GET /api/weather?type=forecast&city={city}
+```
+
+### Setup
+
+1. Get a free key from [OpenWeather](https://home.openweathermap.org/api_keys).
+2. In Vercel → Project → Settings → Environment Variables, add `OPENWEATHER_API_KEY`.
+3. To run locally with the API route, use `vercel dev` (plain `npm run dev` doesn't serve `/api`), with the key in a `.env.local` file (git-ignored).
 
 ---
 
